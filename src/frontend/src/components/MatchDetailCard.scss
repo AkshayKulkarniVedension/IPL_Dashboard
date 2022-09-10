@@ -7,6 +7,7 @@
   .match-result {
     margin-top: 20px;
   }
+  padding: 20px;
 }
 
 .innings {
@@ -14,4 +15,5 @@
   & > p {
     margin-bottom: 20px;
   }
+  text-align: end;
 }

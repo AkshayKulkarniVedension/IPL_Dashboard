@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,6 +40,15 @@ public class TeamController {
         LocalDate startDate = LocalDate.of(year, 1, 1);
         LocalDate endDate = LocalDate.of(year + 1, 1,1);
         return this.matchRepository.getMatchesByTeamBetweenDates(teamName, startDate,endDate);
+    }
 
+    @GetMapping("/team/teams")
+    public List<String> getListOfTeam () {
+        List <Team> listOfTeams = teamRepository.findAll();
+        List <String> listOfTeamNames = new ArrayList<>();
+        for(Team team : listOfTeams){
+            listOfTeamNames.add(team.getTeamName());
+        }
+        return listOfTeamNames;
     }
 }

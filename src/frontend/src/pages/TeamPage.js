@@ -4,10 +4,12 @@ import MatchSmallCard from "../components/MatchSmallCard";
 import { useParams } from "react-router-dom";
 import "./TeamPage.scss";
 import { PieChart } from "react-minimal-pie-chart";
+import { Link } from "react-router-dom";
 
 export function TeamPage() {
   const [teams, setTeams] = useState({});
 
+  const year = 2020;
   const { teamName } = useParams();
   async function fetchMatches() {
     const response = await fetch(`http://localhost:8080/team/${teamName}`);
@@ -48,6 +50,7 @@ export function TeamPage() {
 
       <div className="details-card">
         <h3>Latest Matches</h3>
+        <br />
         <MatchDetailCard
           latestMatch={teams.matches && teams.matches[0]}
           teamName={teams.teamName}
@@ -69,7 +72,7 @@ export function TeamPage() {
         })}
 
       <div className="more">
-        <a href="#">More &#8618;</a>
+        <Link to={`/teams/${teamName}/matches/${year}`}>More &#8618;</Link>
       </div>
     </div>
   );
