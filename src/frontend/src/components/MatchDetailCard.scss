@@ -1,0 +1,17 @@
+.MatchDetailCard {
+  margin-bottom: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  .match-date,
+  .match-venue,
+  .match-result {
+    margin-top: 20px;
+  }
+}
+
+.innings {
+  justify-self: end;
+  & > p {
+    margin-bottom: 20px;
+  }
+}

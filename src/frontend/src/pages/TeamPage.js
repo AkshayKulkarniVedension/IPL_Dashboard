@@ -2,6 +2,8 @@ import { React, useEffect, useState } from "react";
 import MatchDetailCard from "../components/MatchDetailCard";
 import MatchSmallCard from "../components/MatchSmallCard";
 import { useParams } from "react-router-dom";
+import "./TeamPage.scss";
+import { PieChart } from "react-minimal-pie-chart";
 
 export function TeamPage() {
   const [teams, setTeams] = useState({});
@@ -24,24 +26,50 @@ export function TeamPage() {
   if (!teams || !teams.teamName) {
     return <h1>Team not found</h1>;
   }
+
+  const totalWins = teams.totalWins;
+  const totalLosses = teams.totalMatches - totalWins;
+
   return (
     <div className="TeamPage">
-      <h1>{teams.teamName}</h1>
-      <MatchDetailCard
-        latestMatch={teams.matches && teams.matches[0]}
-        teamName={teams.teamName}
-      ></MatchDetailCard>
-      <div>
-        {teams.matches &&
-          teams.matches.map(function (team) {
-            return (
-              <MatchSmallCard
-                key={team.id}
-                team={team}
-                teamName={teams.teamName}
-              ></MatchSmallCard>
-            );
-          })}
+      <div className="team-name">
+        <h1 className="team-name-text">{teams.teamName}</h1>
+      </div>
+
+      <div className="win-vs-loss">
+        wins vs loss
+        <PieChart
+          data={[
+            { title: "wins", value: totalWins, color: "rgb(56, 122, 56)" },
+            { title: "losses", value: totalLosses, color: "rgb(174, 79, 79)" },
+          ]}
+        />
+      </div>
+
+      <div className="details-card">
+        <h3>Latest Matches</h3>
+        <MatchDetailCard
+          latestMatch={teams.matches && teams.matches[0]}
+          teamName={teams.teamName}
+        ></MatchDetailCard>
+      </div>
+
+      {teams.matches &&
+        teams.matches.map(function (team, index) {
+          if (index === 0) {
+            return;
+          }
+          return (
+            <MatchSmallCard
+              key={team.id}
+              team={team}
+              teamName={teams.teamName}
+            ></MatchSmallCard>
+          );
+        })}
+
+      <div className="more">
+        <a href="#">More &#8618;</a>
       </div>
     </div>
   );
